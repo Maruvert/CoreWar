@@ -52,7 +52,7 @@ public class RedcodeInstruction {
 	
 	
 	public static void setStandard(IOpcode icwsStandard) {
-		standard = icwsStandard;
+		standard.getClass().cast(icwsStandard);
 	}
 	
 	

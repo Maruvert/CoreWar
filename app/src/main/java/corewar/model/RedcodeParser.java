@@ -2,11 +2,19 @@ package corewar.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
+
+import corewar.model.redcode.IOpcode;
+import corewar.model.redcode.Standard;
+import corewar.model.redcode.standards.Icws88Opcode;
 
 public class RedcodeParser {
 	
 	private int firstInstructionIndex;
+	private ArrayList<Standard> compatibleStandards;
 	
 
 	public RedcodeParser() {}
@@ -91,6 +99,7 @@ public class RedcodeParser {
 		
 		for (final ListIterator<String> iterator = lines.listIterator(); iterator.hasNext();) {
 			  String line = iterator.next().replace(",", "");
+			  line = line.replace(".", " ");
 			  String[] instruction = line.split(" ");
 			  instructionArrays.add(instruction);
 			  
@@ -98,6 +107,53 @@ public class RedcodeParser {
 		
 		return instructionArrays;
 	}
+	
+	
+	
+	
+	private ArrayList<RedcodeInstruction> createRedcodeObjects(ArrayList<String[]> instructions) {
+		
+		for (final ListIterator<String[]> iterator = instructions.listIterator(); iterator.hasNext();) {
+			 
+			for (String statement : iterator.next()) {
+				
+			}
+			
+		}
+		
+		
+		
+		return null;
+		
+	}
+	
+	
+	
+	
+	/*
+	private Standard defineRedcodeStandard(ArrayList<String[]> instructions) {
+		HashSet<String> opcodeFileList = new HashSet<String>();
+		
+		for (final ListIterator<String[]> iterator = instructions.listIterator(); iterator.hasNext();) {
+			opcodeFileList.add(iterator.next()[0]);
+		}
+		
+		
+		String[] opcodeArray = EnumUtils.getNames(Icws88Opcode.class);
+		List<String> opcodeList = Arrays.asList(opcodeArray);
+		if (!opcodeList.containsAll(opcodeFileList)) {
+			
+		}
+		
+		
+		
+		
+	}
+	
+	*/
+	
+	
+	
 	
 	
 	
