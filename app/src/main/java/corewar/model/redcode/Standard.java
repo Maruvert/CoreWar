@@ -53,9 +53,9 @@ public enum Standard {
 	 * @return Compatible standards
 	 * @throws UnknownStandardException In case of unknown opcode or unsupported standard
 	 */
-	public ArrayList<Standard> getStandardByOpcode(ArrayList<String> opcodes) throws UnknownStandardException {
+	public static ArrayList<Standard> getStandardByOpcode(ArrayList<String> opcodes) throws UnknownStandardException {
 		ArrayList<Standard> compatibleStandards = new ArrayList<Standard>();
-		for (Standard standard : this.values()) {
+		for (Standard standard : values()) {
 			if(standard.getOpcodeArrayList().containsAll(opcodes)) {
 				compatibleStandards.add(standard);
 			}

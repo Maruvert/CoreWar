@@ -1,5 +1,6 @@
 package corewar.model.redcode.standards;
 
+import corewar.model.MemoryAddress;
 import corewar.model.redcode.IOpcode;
 import corewar.model.redcode.Operand;
 
@@ -7,17 +8,14 @@ public enum Icws88Opcode implements IOpcode{
 	
 	DAT {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
-			
 		}
 	},
 	
-	
-	
 	MOV {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -27,7 +25,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	ADD {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -37,7 +35,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SUB {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -47,7 +45,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMP {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -57,7 +55,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMZ {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -67,7 +65,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMN {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -77,7 +75,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	CMP {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -87,7 +85,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SLT {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -97,7 +95,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	DJN {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -107,7 +105,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SPL {
 		@Override
-		public void execute(Operand a, Operand b) {
+		public void execute(MemoryAddress memory) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -116,7 +114,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	
 	
-	public abstract void execute(Operand a, Operand b);
+	public abstract void execute(MemoryAddress memory);
 	
 	
 	

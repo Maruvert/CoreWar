@@ -26,7 +26,7 @@ public class RedcodeParser {
 		
 		redcode = removeBlanks(redcode);
 		ArrayList<String> lines = FileUtils.splitLines(redcode);
-		lines = cleanComments(lines);
+		lines = clearComments(lines);
 		firstInstructionIndex = defineFirstInstruction(lines);
 		ArrayList<String[]> instructions = createInstructionArray(lines);
 		
@@ -64,7 +64,7 @@ public class RedcodeParser {
 	 * @param lines
 	 * @return
 	 */
-	private ArrayList<String> cleanComments(ArrayList<String> lines) {
+	private ArrayList<String> clearComments(ArrayList<String> lines) {
 		for (final ListIterator<String> iterator = lines.listIterator(); iterator.hasNext();) {
 			  final String line = iterator.next();
 			  if (line.contains(";")) {
@@ -116,7 +116,7 @@ public class RedcodeParser {
 		for (final ListIterator<String[]> iterator = instructions.listIterator(); iterator.hasNext();) {
 			 
 			for (String statement : iterator.next()) {
-				
+				RedcodeInstruction instruction = new RedcodeInstruction();
 			}
 			
 		}

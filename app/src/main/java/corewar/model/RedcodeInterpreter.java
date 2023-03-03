@@ -4,8 +4,8 @@ public class RedcodeInterpreter {
 	
 	public RedcodeInterpreter() {}
 	
-	public void execute(RedcodeInstruction instruction, Ram memory) {
-		instruction.getOpcode().execute(instruction.getFirstValue(), instruction.getSecondValue());
+	public void execute(MemoryAddress memory, Ram ram) {
+		memory.getInstruction().getOpcode().execute(memory);
 	}
 
 }
