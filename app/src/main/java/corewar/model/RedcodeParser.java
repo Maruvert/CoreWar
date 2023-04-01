@@ -7,10 +7,15 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import corewar.model.redcode.IOpcode;
-import corewar.model.redcode.Standard;
-import corewar.model.redcode.standards.Icws88Opcode;
+import corewar.model.mars.RedcodeInstruction;
+import corewar.model.mars.redcode.Standard;
+import corewar.model.utils.FileUtils;
 
+/**
+ * The Redcode parser, converts a redcode file into RedcodeInstruction objects
+ * @author Maruvert
+ *
+ */
 public class RedcodeParser {
 	
 	private int firstInstructionIndex;
@@ -24,7 +29,7 @@ public class RedcodeParser {
 	
 	public ArrayList<String> parse(String redcode) {
 		
-		redcode = removeBlanks(redcode);
+		redcode = removeMultipleSpaces(redcode);
 		ArrayList<String> lines = FileUtils.splitLines(redcode);
 		lines = clearComments(lines);
 		firstInstructionIndex = defineFirstInstruction(lines);
@@ -41,7 +46,7 @@ public class RedcodeParser {
 	 * @param lines
 	 * @return
 	 */
-	private String removeBlanks(String redcode) {
+	private String removeMultipleSpaces(String redcode) {
 			return redcode.trim().replaceAll(" +", " ");
 	}
 	

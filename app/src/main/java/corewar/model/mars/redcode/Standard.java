@@ -1,11 +1,11 @@
-package corewar.model.redcode;
+package corewar.model.mars.redcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import corewar.model.EnumUtils;
 import corewar.model.exceptions.UnknownStandardException;
-import corewar.model.redcode.standards.Icws88Opcode;
+import corewar.model.mars.redcode.standards.Icws88Opcode;
+import corewar.model.utils.EnumUtils;
 
 public enum Standard {
 	

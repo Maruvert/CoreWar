@@ -1,6 +1,9 @@
-package corewar.model;
+package corewar.model.mars;
 
 import java.util.ArrayList;
+
+import corewar.model.mars.memory.CircularArrayList;
+import corewar.model.mars.memory.MemoryAddress;
 
 public class Ram {
 	

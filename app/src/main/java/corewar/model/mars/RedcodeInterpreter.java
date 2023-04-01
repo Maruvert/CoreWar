@@ -1,4 +1,6 @@
-package corewar.model;
+package corewar.model.mars;
+
+import corewar.model.mars.memory.MemoryAddress;
 
 public class RedcodeInterpreter {
 	

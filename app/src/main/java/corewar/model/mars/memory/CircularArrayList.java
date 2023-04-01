@@ -1,4 +1,4 @@
-package corewar.model;
+package corewar.model.mars.memory;
 
 import java.util.ArrayList;
 

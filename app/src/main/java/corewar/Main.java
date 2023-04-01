@@ -2,8 +2,8 @@ package corewar;
 
 import java.util.ArrayList;
 
-import corewar.model.FileUtils;
 import corewar.model.RedcodeParser;
+import corewar.model.utils.FileUtils;
 
 public class Main {
 

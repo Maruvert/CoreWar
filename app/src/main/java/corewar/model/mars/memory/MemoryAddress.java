@@ -1,4 +1,6 @@
-package corewar.model;
+package corewar.model.mars.memory;
+
+import corewar.model.mars.RedcodeInstruction;
 
 public class MemoryAddress {
 	

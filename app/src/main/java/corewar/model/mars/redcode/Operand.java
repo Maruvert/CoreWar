@@ -1,4 +1,4 @@
-package corewar.model.redcode;
+package corewar.model.mars.redcode;
 
 public class Operand {
 	

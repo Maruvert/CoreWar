@@ -1,6 +1,6 @@
-package corewar.model.redcode;
+package corewar.model.mars.redcode;
 
-import corewar.model.MemoryAddress;
+import corewar.model.mars.memory.MemoryAddress;
 
 public interface IOpcode {
 	

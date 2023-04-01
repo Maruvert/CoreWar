@@ -1,23 +1,41 @@
-package corewar.model;
+package corewar.model.mars;
 
-import corewar.model.redcode.IOpcode;
-import corewar.model.redcode.Operand;
+import corewar.model.mars.redcode.IOpcode;
+import corewar.model.mars.redcode.Operand;
 
+/**
+ * Represents a Redcode instruction (Opcode + Operand A and B) 
+ * @author Maruvert
+ */
 public class RedcodeInstruction {
 	
 	private static IOpcode standard;
 	
+	
+	/**
+	 * The opcode
+	 */
 	private IOpcode opcode;
-	private Operand firstValue;
-	private Operand secondValue;
+	
+	
+	/**
+	 * The A operand
+	 */
+	private Operand a;
+	
+	
+	/**
+	 * The B operand
+	 */
+	private Operand b;
 	
 	
 	
 	
 	public RedcodeInstruction(IOpcode opcode, Operand firstValue, Operand secondValue) {
 		this.opcode = opcode;
-		this.firstValue = firstValue;
-		this.secondValue = secondValue;
+		this.a = firstValue;
+		this.b = secondValue;
 	}
 
 	
@@ -25,8 +43,8 @@ public class RedcodeInstruction {
 	
 	public RedcodeInstruction() {
 		opcode = opcode.getDat();
-		this.firstValue = new Operand();
-		this.secondValue = new Operand();
+		this.a = new Operand();
+		this.b = new Operand();
 	}
 
 
@@ -39,14 +57,14 @@ public class RedcodeInstruction {
 
 
 	public Operand getFirstValue() {
-		return firstValue;
+		return a;
 	}
 
 
 
 
 	public Operand getSecondValue() {
-		return secondValue;
+		return b;
 	}
 	
 	

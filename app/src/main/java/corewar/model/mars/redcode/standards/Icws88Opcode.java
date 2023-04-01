@@ -1,8 +1,7 @@
-package corewar.model.redcode.standards;
+package corewar.model.mars.redcode.standards;
 
-import corewar.model.MemoryAddress;
-import corewar.model.redcode.IOpcode;
-import corewar.model.redcode.Operand;
+import corewar.model.mars.memory.MemoryAddress;
+import corewar.model.mars.redcode.IOpcode;
 
 public enum Icws88Opcode implements IOpcode{
 	

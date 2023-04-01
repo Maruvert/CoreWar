@@ -1,7 +1,12 @@
-package corewar.model;
+package corewar.model.utils;
 
 import java.util.Arrays;
 
+/**
+ * Enum utility methods
+ * @author Maruvert
+ *
+ */
 public class EnumUtils {
 	
 	

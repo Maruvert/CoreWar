@@ -1,4 +1,6 @@
-package corewar.model;
+package corewar.model.mars;
+
+import corewar.model.mars.Warrior;
 
 public class Fifo {
 	
