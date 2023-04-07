@@ -3,6 +3,7 @@ package corewar.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class RedcodeParser {
 	
 	
 	
-	public ArrayList<String> parse(String redcode) {
+	public LinkedList<RedcodeInstruction> parse(String redcode) {
 		
 		redcode = removeMultipleSpaces(redcode);
 		ArrayList<String> lines = FileUtils.splitLines(redcode);
@@ -35,7 +36,7 @@ public class RedcodeParser {
 		firstInstructionIndex = defineFirstInstruction(lines);
 		ArrayList<String[]> instructions = createInstructionArray(lines);
 		
-		return lines;
+		return null;
 		
 	}
 	
