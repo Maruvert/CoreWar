@@ -9,9 +9,6 @@ import corewar.model.mars.redcode.Operand;
  */
 public class RedcodeInstruction {
 	
-	private static IOpcode standard;
-	
-	
 	/**
 	 * The opcode
 	 */
@@ -46,6 +43,13 @@ public class RedcodeInstruction {
 		this.a = new Operand();
 		this.b = new Operand();
 	}
+	
+	
+	
+	
+	public void decrementBfield() {
+		this.b.decrement();
+	}
 
 
 
@@ -56,21 +60,15 @@ public class RedcodeInstruction {
 
 
 
-	public Operand getFirstValue() {
+	public Operand getAfield() {
 		return a;
 	}
 
 
 
 
-	public Operand getSecondValue() {
+	public Operand getBfield() {
 		return b;
-	}
-	
-	
-	
-	public static void setStandard(IOpcode icwsStandard) {
-		standard.getClass().cast(icwsStandard);
 	}
 	
 	

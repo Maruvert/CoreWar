@@ -12,6 +12,7 @@ public enum Icws88Opcode implements IOpcode{
 		}
 	},
 	
+	
 	MOV {
 		@Override
 		public void execute(MemoryAddress memory) {

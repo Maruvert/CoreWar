@@ -9,10 +9,7 @@ public class Ram {
 	
 	private CircularArrayList<MemoryAddress> memory;
 	
-	/**
-	 * TODO find the real default value if exists (1024 is a placeholder)
-	 */
-	private static final int DEFAULT_MEMORY_SIZE = 1024;
+	private static final int DEFAULT_MEMORY_SIZE = 8000;
 	
 	
 	
@@ -34,6 +31,19 @@ public class Ram {
 			address.initialize();
 		}
 	}
+	
+	
+	
+	
+	public MemoryAddress getMemoryAddress(int address) {
+		for (MemoryAddress slot : this.memory) {
+			if (slot.getAddress() == address) {
+				return slot;
+			}
+		}
+		return null;
+	}
+	
 	
 
 }
