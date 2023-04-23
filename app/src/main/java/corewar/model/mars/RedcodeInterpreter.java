@@ -1,5 +1,6 @@
 package corewar.model.mars;
 
+import corewar.model.exceptions.InvalidAddressingModeException;
 import corewar.model.mars.memory.MemoryAddress;
 
 public class RedcodeInterpreter {
@@ -43,7 +44,11 @@ public class RedcodeInterpreter {
 	
 	
 	public void execute(MemoryAddress memory, Ram ram) {
-		memory.getInstruction().getOpcode().execute(memory);
+		try {
+			memory.getInstruction().getOpcode().execute(ram, memory);
+		} catch (InvalidAddressingModeException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

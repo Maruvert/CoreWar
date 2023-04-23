@@ -9,22 +9,35 @@ public enum AddressingMode {
 	
 	
 	IMMEDIATE {
+		@Override
 		public int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value) {
 			return value;
+		}
+
+		@Override
+		public String getSymbol() {
+			return "#";
 		}
 	},
 	
 	
 	
 	DIRECT {
+		@Override
 		public int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value) {
 			return address.getAddress()+value;
+		}
+
+		@Override
+		public String getSymbol() {
+			return "$";
 		}	
 	},
 	
 	
 	
 	INDIRECT {
+		@Override
 		public int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value) {
 			int indirectValue = 0;
 			MemoryAddress indirectAddress = null;
@@ -36,11 +49,17 @@ public enum AddressingMode {
 			}
 			return indirectAddress.getAddress()+indirectValue;
 		}
+
+		@Override
+		public String getSymbol() {
+			return "@";
+		}
 	},
 	
 	
 	
 	INDIRECT_PREDECREMENT {
+		@Override
 		public int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value) {
 			int indirectValue = 0;
 			MemoryAddress indirectAddress = null;
@@ -53,11 +72,20 @@ public enum AddressingMode {
 			}
 			return indirectAddress.getAddress()+indirectValue;
 		}
+
+		@Override
+		public String getSymbol() {
+			return "<";
+		}
 	};
 	
 	
 	
 	public abstract int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value);
+	
+	
+	
+	public abstract String getSymbol();
 	
 	
 	

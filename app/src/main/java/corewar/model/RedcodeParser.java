@@ -14,7 +14,6 @@ import corewar.model.utils.FileUtils;
 
 /**
  * The Redcode parser, converts a redcode file into RedcodeInstruction objects
- * @author Maruvert
  *
  */
 public class RedcodeParser {

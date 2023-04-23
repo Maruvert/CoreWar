@@ -5,7 +5,6 @@ import corewar.model.mars.redcode.Operand;
 
 /**
  * Represents a Redcode instruction (Opcode + Operand A and B) 
- * @author Maruvert
  */
 public class RedcodeInstruction {
 	
@@ -40,17 +39,24 @@ public class RedcodeInstruction {
 	
 	public RedcodeInstruction() {
 		opcode = opcode.getDat();
-		this.a = new Operand();
-		this.b = new Operand();
+		this.a = new Operand(0);
+		this.b = new Operand(0);
 	}
 	
+	
+	
+	public RedcodeInstruction(int value) {
+		this.opcode = opcode.getDat();
+		this.a = new Operand(0);
+		this.b = new Operand(value);
+	}
 	
 	
 	
 	public void decrementBfield() {
 		this.b.decrement();
 	}
-
+	
 
 
 	public IOpcode getOpcode() {

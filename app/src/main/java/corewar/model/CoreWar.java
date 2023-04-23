@@ -9,7 +9,6 @@ import corewar.model.utils.FileUtils;
 
 /**
  * The CoreWar launcher, used from main
- * @author Maruvert
  *
  */
 public class CoreWar {
@@ -53,7 +52,7 @@ public class CoreWar {
 	
 	
 	
-	private void loadRedcodeFile(String path, Warrior warrior) {
+	public void loadRedcodeFile(String path, Warrior warrior) {
 		RedcodeParser parser = new RedcodeParser();
 		String redcode = FileUtils.fileToString(path);
 		warrior.loadInstructions(parser.parse(redcode));

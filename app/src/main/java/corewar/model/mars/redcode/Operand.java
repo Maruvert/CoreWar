@@ -7,6 +7,19 @@ public class Operand {
 	
 	
 	
+	public Operand(AddressingMode mode, int value) {
+		this.mode = mode;
+		this.value = value;
+	}
+	
+	
+	
+	public Operand(int value) {
+		this(AddressingMode.IMMEDIATE, value);
+	}
+	
+	
+	
 	
 	
 	public void decrement() {
@@ -15,6 +28,15 @@ public class Operand {
 	
 	
 	
+	public AddressingMode getMode() {
+		return mode;
+	}
+
+
+
+
+
+
 	public int getValue() {
 		return value;
 	}

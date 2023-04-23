@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * Enum utility methods
- * @author Maruvert
  *
  */
 public class EnumUtils {

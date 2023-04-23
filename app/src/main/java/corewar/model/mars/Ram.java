@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import corewar.model.mars.memory.CircularArrayList;
 import corewar.model.mars.memory.MemoryAddress;
+import corewar.model.mars.redcode.Operand;
 
 public class Ram {
 	
@@ -34,7 +35,6 @@ public class Ram {
 	
 	
 	
-	
 	public MemoryAddress getMemoryAddress(int address) {
 		for (MemoryAddress slot : this.memory) {
 			if (slot.getAddress() == address) {
@@ -43,6 +43,16 @@ public class Ram {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	public MemoryAddress getMemoryAddressByOperand(MemoryAddress memory, Operand op) {
+		return memory;
+	}
+	
+	
+	
 	
 	
 

@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 /**
  * File utility methods
- * @author Maruvert
  */
 public class FileUtils {
 	
