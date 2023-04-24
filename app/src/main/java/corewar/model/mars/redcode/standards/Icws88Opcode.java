@@ -37,7 +37,7 @@ public enum Icws88Opcode implements IOpcode{
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
-			MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getBfield());
+			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.setInstruction(source);
 			return UNCHANGED_QUEUE;
 		}
@@ -57,7 +57,7 @@ public enum Icws88Opcode implements IOpcode{
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
 			int numberToAdd = source.getBfield().getValue();
-			MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getBfield());
+			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.getInstruction().addToBfield(numberToAdd);
 			return UNCHANGED_QUEUE;
 		}
@@ -77,7 +77,7 @@ public enum Icws88Opcode implements IOpcode{
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
 			int numberToSub = source.getBfield().getValue();
-			MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getBfield());
+			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.getInstruction().addToBfield(-numberToSub);
 			return UNCHANGED_QUEUE;
 		}
@@ -95,7 +95,7 @@ public enum Icws88Opcode implements IOpcode{
 		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
-			MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getAfield());
+			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
 			return destination.getAddress();
 			
 		}
@@ -116,7 +116,7 @@ public enum Icws88Opcode implements IOpcode{
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (bPointedValue == 0) {
-				MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getAfield());
+				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
 				return destination.getAddress();
 			}
 			return UNCHANGED_QUEUE;
@@ -138,7 +138,7 @@ public enum Icws88Opcode implements IOpcode{
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (bPointedValue != 0) {
-				MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getAfield());
+				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
 				return destination.getAddress();
 			}
 			return UNCHANGED_QUEUE;
@@ -208,7 +208,7 @@ public enum Icws88Opcode implements IOpcode{
 			bPointedValue.decrementBfield();
 			
 			if (bPointedValue.getBfield().getValue() != 0) {
-				MemoryAddress destination = this.getAddressbyOperand(ram, address, instruction.getAfield());
+				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
 				return destination.getAddress();
 			}
 			return UNCHANGED_QUEUE;
@@ -235,8 +235,12 @@ public enum Icws88Opcode implements IOpcode{
 		}
 	};
 	
-	private static int UNCHANGED_QUEUE = -1;
-	private static int SKIP_NEXT = 2;
+	
+	
+	
+	
+	private static final int UNCHANGED_QUEUE = -1;
+	private static final int SKIP_NEXT = 2;
 	
 	
 	public abstract int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException;
@@ -269,7 +273,7 @@ public enum Icws88Opcode implements IOpcode{
 
 	
 	
-	protected MemoryAddress getAddressbyOperand(Ram ram, MemoryAddress address, Operand op) throws InvalidAddressingModeException {
+	protected MemoryAddress getAddressByOperand(Ram ram, MemoryAddress address, Operand op) throws InvalidAddressingModeException {
 		if (op.getMode().equals(AddressingMode.IMMEDIATE)) {
 			throw new InvalidAddressingModeException();
 		}

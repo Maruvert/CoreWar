@@ -10,16 +10,6 @@ public class Ram {
 	
 	private CircularArrayList<MemoryAddress> memory;
 	
-	private static final int DEFAULT_MEMORY_SIZE = 8000;
-	
-	
-	
-	
-	public Ram() {
-		this(DEFAULT_MEMORY_SIZE);
-	}
-	
-	
 	
 	
 	public Ram(int memorySize) {

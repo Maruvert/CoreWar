@@ -13,15 +13,27 @@ import corewar.model.utils.FileUtils;
  */
 public class CoreWar {
 	
+	private static final int DEFAULT_MEMORY_SIZE = 8000;
+	
+	
 	private Warrior firstWarrior;
 	private Warrior secondWarrior;
+	private int ramSize;
+	
+	
+	
+	public CoreWar() {
+		this.ramSize = DEFAULT_MEMORY_SIZE;
+	}
+	
+	
 	
 	
 	/**
 	 * Launch a CoreWar game
 	 */
 	public void start() {
-		Ram ram = new Ram();
+		Ram ram = new Ram(this.ramSize);
 		ram.initialize();
 		RedcodeInterpreter alu = new RedcodeInterpreter();
 		alu.interpret();
@@ -55,7 +67,7 @@ public class CoreWar {
 	public void loadRedcodeFile(String path, Warrior warrior) {
 		RedcodeParser parser = new RedcodeParser();
 		String redcode = FileUtils.fileToString(path);
-		warrior.loadInstructions(parser.parse(redcode));
+		warrior.loadInstructions(parser.parse(redcode), this.ramSize);
 	}
 	
 

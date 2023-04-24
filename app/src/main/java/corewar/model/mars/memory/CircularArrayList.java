@@ -2,14 +2,18 @@ package corewar.model.mars.memory;
 
 import java.util.ArrayList;
 
-/**
- * TODO Deal with the serial ID
- */
-@SuppressWarnings("serial")
+
 public class CircularArrayList<E> extends ArrayList<E>{
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6465849261706556743L;
+
+
+
 	public CircularArrayList() {
 		super();
 	}

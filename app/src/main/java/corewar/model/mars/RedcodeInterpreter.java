@@ -7,9 +7,9 @@ public class RedcodeInterpreter {
 	
 	private Ram ram;
 	
-	private Fifo f1;
-	private Fifo f2;
-	private Fifo current;
+	private Warrior w1;
+	private Warrior w2;
+	private Warrior current;
 	
 	
 	
@@ -20,9 +20,9 @@ public class RedcodeInterpreter {
 	
 	
 	
-	public RedcodeInterpreter(Fifo f1, Fifo f2) {
-		this.f1 = f1;
-		this.f1 = f1;
+	public RedcodeInterpreter(Warrior w1, Warrior w2) {
+		this.w1 = w1;
+		this.w1 = w1;
 	}
 	
 	
@@ -31,7 +31,7 @@ public class RedcodeInterpreter {
 	public void interpret() {
 		
 		while (!isOneFifoEmpty()) {
-			this.execute(current.nextInstruction(), ram);
+			this.execute(ram.getMemoryAddress(current.getNextAddressToExecute()), ram);
 			this.switchCurrent();
 		}
 		
@@ -58,11 +58,11 @@ public class RedcodeInterpreter {
 	 * Switch the Fifo to be executed
 	 */
 	private void switchCurrent() {
-		if (this.current.equals(f1)) {
-			this.current = f2;
+		if (this.current.equals(w1)) {
+			this.current = w2;
 		}
 		else {
-			this.current = f1;
+			this.current = w1;
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class RedcodeInterpreter {
 	 * @return True if one FIFO is empty ; false else
 	 */
 	private boolean isOneFifoEmpty() {
-		return this.f1.isEmpty() || this.f2.isEmpty(); 
+		return this.w1.isFifoEmpty() || this.w2.isFifoEmpty(); 
 	}
 	
 	
