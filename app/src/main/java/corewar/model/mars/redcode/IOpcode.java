@@ -7,7 +7,7 @@ import corewar.model.mars.memory.MemoryAddress;
 
 public interface IOpcode {
 	
-	public void execute(Ram ram, MemoryAddress memory) throws InvalidAddressingModeException;
+	public int execute(Ram ram, MemoryAddress memory) throws InvalidAddressingModeException;
 	
 	
 	public boolean isLegal(RedcodeInstruction instruction);

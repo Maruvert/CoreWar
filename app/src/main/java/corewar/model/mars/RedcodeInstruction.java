@@ -58,6 +58,12 @@ public class RedcodeInstruction {
 	}
 	
 
+	public void addToBfield(int value) {
+		this.b.add(value);
+	} 
+	
+	
+	
 
 	public IOpcode getOpcode() {
 		return opcode;

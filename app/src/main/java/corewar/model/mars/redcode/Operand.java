@@ -28,6 +28,12 @@ public class Operand {
 	
 	
 	
+	public void add(int value) {
+		this.value += value;
+	}
+	
+	
+	
 	public AddressingMode getMode() {
 		return mode;
 	}
