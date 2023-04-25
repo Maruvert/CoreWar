@@ -11,26 +11,53 @@ public class Process {
 	private static int ramSize;
 	
 	
-	public Process(int ramSize) {
-		this.ramSize = ramSize;
+	public Process() {}
+	
+	
+	
+	public Process(int currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 	
 	
-	
+	/**
+	 * Return the next instruction to be executed and increment the position by 1
+	 * @return The next instruction to be executed
+	 */
 	public int getNextInstructionAddress() {
 		int nextInstruction = this.currentPosition;
-		this.currentPosition = this.incrementAddress(currentPosition);
+		this.currentPosition = this.incrementAddress(currentPosition, 1);
 		return nextInstruction;
 	}
 	
 	
 	
+	public void skipNextInstruction() {
+		this.currentPosition = this.incrementAddress(currentPosition, 1);
+	}
 	
-	private int incrementAddress(int value) {
+	
+	
+	private int incrementAddress(int value, int incrementValue) {
+		value += incrementValue;
 		if (value >= ramSize) {
-			value = 0;
+			value -= ramSize;
 		}
 		return value;
 	}
+
+
+
+	public void setCurrentPosition(int currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+	
+	
+	
+	public static void setRamSize(int ramSize) {
+		Process.ramSize = ramSize;
+	}
+	
+	
 	
 }

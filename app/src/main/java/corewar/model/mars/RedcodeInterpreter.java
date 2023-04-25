@@ -2,6 +2,7 @@ package corewar.model.mars;
 
 import corewar.model.exceptions.InvalidAddressingModeException;
 import corewar.model.mars.memory.MemoryAddress;
+import corewar.model.mars.redcode.NextInstructionInformation;
 
 public class RedcodeInterpreter {
 	
@@ -30,8 +31,11 @@ public class RedcodeInterpreter {
 	
 	public void interpret() {
 		
+		NextInstructionInformation next;
+		
 		while (!isOneFifoEmpty()) {
-			this.execute(ram.getMemoryAddress(current.getNextAddressToExecute()), ram);
+			next = this.execute(ram.getMemoryAddress(current.getNextAddressToExecute()), ram);
+			this.setNextInstruction(next);
 			this.switchCurrent();
 		}
 		
@@ -43,11 +47,32 @@ public class RedcodeInterpreter {
 	
 	
 	
-	public void execute(MemoryAddress memory, Ram ram) {
+	private NextInstructionInformation execute(MemoryAddress memory, Ram ram) {
+		NextInstructionInformation next = null;
 		try {
-			memory.getInstruction().getOpcode().execute(ram, memory);
+			next = memory.getInstruction().getOpcode().execute(ram, memory);
 		} catch (InvalidAddressingModeException e) {
 			e.printStackTrace();
+		}
+		return next;
+	}
+	
+	
+	
+	
+	private void setNextInstruction(NextInstructionInformation next) {
+		switch (next.getOperation()) {
+		case NEXT:
+			break;
+		case SKIP:
+			current.skipNextInstructionOnActiveProcess();
+			break;
+		case JUMP:
+			current.jumpInstructionOnActiveProcess(next.getAddress());
+			break;
+		case FORK:
+			current.createNewProcess(next.getAddress());
+			break;
 		}
 	}
 	

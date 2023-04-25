@@ -29,9 +29,9 @@ public class Warrior {
 	 * Create a new process and load instructions into it. Used when the warrior is created
 	 * @param instructions The instructions to load
 	 */
-	public void loadInstructions(LinkedList<RedcodeInstruction> instructions, int ramSize) {
+	public void loadInstructions(LinkedList<RedcodeInstruction> instructions) {
 		if(this.fifo.isEmpty()) {
-			this.fifo.add(new Process(ramSize));
+			this.fifo.add(new Process(0));
 			this.currentActiveProcess = 0;
 		}
 		//TODO deal with the else condition
@@ -39,13 +39,33 @@ public class Warrior {
 	
 	
 	
-	
+	/**
+	 * Return the next address that should be executed on the current process and select the next process
+	 * @return The address that should be executed
+	 */
 	public int getNextAddressToExecute() {
 		int nextAddress = this.fifo.get(currentActiveProcess).getNextInstructionAddress();
 		this.nextCurrentActiveProcess();
 		return nextAddress;
 	}
 	
+	
+	
+	public void skipNextInstructionOnActiveProcess() {
+		this.fifo.get(currentActiveProcess).skipNextInstruction();
+	}
+	
+	
+	public void jumpInstructionOnActiveProcess(int address) {
+		this.fifo.get(currentActiveProcess).setCurrentPosition(address);
+	}
+	
+	
+	
+	
+	public void createNewProcess(int address) {
+		this.fifo.add(new Process(address));
+	}
 	
 	
 	private void nextCurrentActiveProcess() {

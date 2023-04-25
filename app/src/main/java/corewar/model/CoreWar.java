@@ -6,6 +6,7 @@ import corewar.model.mars.Ram;
 import corewar.model.mars.RedcodeInterpreter;
 import corewar.model.mars.Warrior;
 import corewar.model.utils.FileUtils;
+import corewar.model.mars.Process;
 
 /**
  * The CoreWar launcher, used from main
@@ -33,6 +34,7 @@ public class CoreWar {
 	 * Launch a CoreWar game
 	 */
 	public void start() {
+		Process.setRamSize(ramSize);
 		Ram ram = new Ram(this.ramSize);
 		ram.initialize();
 		RedcodeInterpreter alu = new RedcodeInterpreter();
@@ -67,7 +69,7 @@ public class CoreWar {
 	public void loadRedcodeFile(String path, Warrior warrior) {
 		RedcodeParser parser = new RedcodeParser();
 		String redcode = FileUtils.fileToString(path);
-		warrior.loadInstructions(parser.parse(redcode), this.ramSize);
+		warrior.loadInstructions(parser.parse(redcode));
 	}
 	
 

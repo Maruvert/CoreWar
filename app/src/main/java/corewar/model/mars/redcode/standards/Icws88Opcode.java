@@ -6,6 +6,8 @@ import corewar.model.mars.RedcodeInstruction;
 import corewar.model.mars.memory.MemoryAddress;
 import corewar.model.mars.redcode.AddressingMode;
 import corewar.model.mars.redcode.IOpcode;
+import corewar.model.mars.redcode.NextInstructionInformation;
+import corewar.model.mars.redcode.NextInstructionOperation;
 import corewar.model.mars.redcode.Operand;
 
 public enum Icws88Opcode implements IOpcode{
@@ -15,8 +17,8 @@ public enum Icws88Opcode implements IOpcode{
 	
 	DAT {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) {
-			return UNCHANGED_QUEUE;
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) {
+			return setNext(NextInstructionOperation.NEXT);
 		}
 
 		@Override
@@ -33,13 +35,13 @@ public enum Icws88Opcode implements IOpcode{
 	
 	MOV {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
 			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.setInstruction(source);
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT);
 		}
 
 		@Override
@@ -52,14 +54,14 @@ public enum Icws88Opcode implements IOpcode{
 	
 	ADD {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
 			int numberToAdd = source.getBfield().getValue();
 			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.getInstruction().addToBfield(numberToAdd);
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT);
 		}
 
 		@Override
@@ -72,14 +74,14 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SUB {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction source = this.getInstructionByOperand(ram, address, instruction.getAfield());
 			int numberToSub = source.getBfield().getValue();
 			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getBfield());
 			destination.getInstruction().addToBfield(-numberToSub);
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT);
 		}
 
 		@Override
@@ -92,11 +94,11 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMP {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
-			return destination.getAddress();
+			return setNext(NextInstructionOperation.JUMP, destination.getAddress());
 			
 		}
 
@@ -110,16 +112,16 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMZ {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (bPointedValue == 0) {
 				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
-				return destination.getAddress();
+				return setNext(NextInstructionOperation.JUMP, destination.getAddress());
 			}
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT);
 		}
 
 		@Override
@@ -132,16 +134,16 @@ public enum Icws88Opcode implements IOpcode{
 	
 	JMN {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (bPointedValue != 0) {
 				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
-				return destination.getAddress();
+				return setNext(NextInstructionOperation.JUMP, destination.getAddress());
 			}
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT, 0);
 		}
 
 		@Override
@@ -154,17 +156,17 @@ public enum Icws88Opcode implements IOpcode{
 	
 	CMP {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			int aPointedValue = this.getInstructionByOperand(ram, address, instruction.getAfield()).getAfield().getValue();
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (aPointedValue == bPointedValue) {
-				return address.getAddress() + SKIP_NEXT;
+				return setNext(NextInstructionOperation.SKIP);
 			}
 			
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT);
 			
 		}
 
@@ -178,17 +180,17 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SLT {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			int aPointedValue = this.getInstructionByOperand(ram, address, instruction.getAfield()).getAfield().getValue();
 			int bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield()).getBfield().getValue();
 			
 			if (aPointedValue < bPointedValue) {
-				return address.getAddress() + SKIP_NEXT;
+				return setNext(NextInstructionOperation.SKIP);
 			}
 			
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT, 0);
 		}
 
 		@Override
@@ -201,7 +203,7 @@ public enum Icws88Opcode implements IOpcode{
 	
 	DJN {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
 			RedcodeInstruction instruction = address.getInstruction();
 			RedcodeInstruction bPointedValue = this.getInstructionByOperand(ram, address, instruction.getBfield());
@@ -209,9 +211,9 @@ public enum Icws88Opcode implements IOpcode{
 			
 			if (bPointedValue.getBfield().getValue() != 0) {
 				MemoryAddress destination = this.getAddressByOperand(ram, address, instruction.getAfield());
-				return destination.getAddress();
+				return setNext(NextInstructionOperation.JUMP, destination.getAddress());
 			}
-			return UNCHANGED_QUEUE;
+			return setNext(NextInstructionOperation.NEXT, 0);
 		}
 
 		@Override
@@ -224,9 +226,11 @@ public enum Icws88Opcode implements IOpcode{
 	
 	SPL {
 		@Override
-		public int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
+		public NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException {
 			if (!isLegal(address.getInstruction())) throw new InvalidAddressingModeException();
-			return UNCHANGED_QUEUE;
+			RedcodeInstruction instruction = address.getInstruction();
+			MemoryAddress fork = this.getAddressByOperand(ram, address, instruction.getAfield());
+			return setNext(NextInstructionOperation.FORK, fork.getAddress());
 		}
 
 		@Override
@@ -236,14 +240,7 @@ public enum Icws88Opcode implements IOpcode{
 	};
 	
 	
-	
-	
-	
-	private static final int UNCHANGED_QUEUE = -1;
-	private static final int SKIP_NEXT = 2;
-	
-	
-	public abstract int execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException;
+	public abstract NextInstructionInformation execute(Ram ram, MemoryAddress address) throws InvalidAddressingModeException;
 	
 	public abstract boolean isLegal(RedcodeInstruction instruction);
 	
@@ -279,6 +276,17 @@ public enum Icws88Opcode implements IOpcode{
 		}
 		return ram.getMemoryAddress(op.getMode().getTargetedMemoryAddress(ram, address, op.getValue()));
 	}
+	
+	
+	
+	protected NextInstructionInformation setNext(NextInstructionOperation operation, int address) {
+		return new NextInstructionInformation(operation, address);
+	}
+	
+	protected NextInstructionInformation setNext(NextInstructionOperation operation) {
+		return new NextInstructionInformation(operation);
+	}
+	
 	
 	
 	public IOpcode getDat() {
