@@ -1,8 +1,12 @@
 package corewar.model.mars;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import corewar.model.exceptions.InvalidAddressingModeException;
 import corewar.model.mars.memory.MemoryAddress;
 import corewar.model.mars.redcode.NextInstructionInformation;
+import corewar.view.IRamViewSubscriber;
 
 public class RedcodeInterpreter {
 	
@@ -11,6 +15,8 @@ public class RedcodeInterpreter {
 	private Warrior w1;
 	private Warrior w2;
 	private Warrior current;
+	
+	private ArrayList<IRamViewSubscriber> subscribers;
 	
 	
 	
@@ -21,9 +27,12 @@ public class RedcodeInterpreter {
 	
 	
 	
-	public RedcodeInterpreter(Warrior w1, Warrior w2) {
+	public RedcodeInterpreter(Ram ram, Warrior w1, Warrior w2) {
+		this.ram = ram;
 		this.w1 = w1;
-		this.w1 = w1;
+		this.w2 = w2;
+		this.current = w1;
+		this.subscribers = new ArrayList<IRamViewSubscriber>();
 	}
 	
 	
@@ -34,8 +43,17 @@ public class RedcodeInterpreter {
 		NextInstructionInformation next;
 		
 		while (!isOneFifoEmpty()) {
-			next = this.execute(ram.getMemoryAddress(current.getNextAddressToExecute()), ram);
+			int addressToExecute = current.getNextAddressToExecute();
+			next = this.execute(ram.getMemoryAddress(addressToExecute), ram);
+			this.notify(OperationType.EXECUTION, addressToExecute, this.warriorToNumber(current));
 			this.setNextInstruction(next);
+			
+			try {
+				TimeUnit.MILLISECONDS.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			this.switchCurrent();
 		}
 		
@@ -93,7 +111,15 @@ public class RedcodeInterpreter {
 	
 	
 	
-	
+	private int warriorToNumber(Warrior warrior) {
+		if (warrior.equals(w1)) {
+			return 0;
+		}
+		else if (warrior.equals(w2)) {
+			return 1;
+		}
+		else return -1;
+	}
 	
 	
 	
@@ -106,6 +132,22 @@ public class RedcodeInterpreter {
 	private boolean isOneFifoEmpty() {
 		return this.w1.isFifoEmpty() || this.w2.isFifoEmpty(); 
 	}
+	
+	
+	
+	private void notify(OperationType type, int address, int warriorNumber) {
+		for(IRamViewSubscriber sub : this.subscribers) {
+			sub.update(type, address, warriorNumber);
+		}
+	}
+	
+	
+	
+	public void subscribe(IRamViewSubscriber sub) {
+		this.subscribers.add(sub);
+	}
+	
+	
 	
 	
 

@@ -28,7 +28,7 @@ public class CircularArrayList<E> extends ArrayList<E>{
 	
 	@Override
 	public E get(int index) {
-		return get(index % size());
+		return super.get(index % size());
 	}
 
 }

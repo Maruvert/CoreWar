@@ -1,9 +1,10 @@
 package corewar.model.mars.redcode;
 
+import java.util.HashMap;
+
 import corewar.model.exceptions.NotAValueException;
 import corewar.model.mars.Ram;
 import corewar.model.mars.memory.MemoryAddress;
-import corewar.model.mars.redcode.standards.Icws88Opcode;
 
 public enum AddressingMode {
 	
@@ -78,6 +79,17 @@ public enum AddressingMode {
 			return "<";
 		}
 	};
+	
+	
+	
+	public static HashMap<String, AddressingMode> getSymbols() {
+		HashMap<String, AddressingMode> symbols = new HashMap<String, AddressingMode>();
+		for (AddressingMode mode : AddressingMode.class.getEnumConstants()) {
+			symbols.put(mode.getSymbol(), mode);
+		}
+		return symbols;
+	}
+	
 	
 	
 	

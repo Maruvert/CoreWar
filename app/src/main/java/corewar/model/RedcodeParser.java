@@ -2,14 +2,16 @@ package corewar.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 
+import corewar.model.exceptions.InvalidOperandException;
+import corewar.model.exceptions.UnknownOpcodeException;
 import corewar.model.mars.RedcodeInstruction;
-import corewar.model.mars.redcode.Standard;
+import corewar.model.mars.redcode.AddressingMode;
+import corewar.model.mars.redcode.Opcode;
+import corewar.model.mars.redcode.Operand;
 import corewar.model.utils.FileUtils;
 
 /**
@@ -19,7 +21,6 @@ import corewar.model.utils.FileUtils;
 public class RedcodeParser {
 	
 	private int firstInstructionIndex;
-	private ArrayList<Standard> compatibleStandards;
 	
 
 	public RedcodeParser() {}
@@ -34,8 +35,8 @@ public class RedcodeParser {
 		lines = clearComments(lines);
 		firstInstructionIndex = defineFirstInstruction(lines);
 		ArrayList<String[]> instructions = createInstructionArray(lines);
-		
-		return null;
+		LinkedList<RedcodeInstruction> instructionList = createRedcodeObjects(instructions);
+		return instructionList;
 		
 	}
 	
@@ -116,22 +117,88 @@ public class RedcodeParser {
 	
 	
 	
-	private ArrayList<RedcodeInstruction> createRedcodeObjects(ArrayList<String[]> instructions) {
-		
+	private LinkedList<RedcodeInstruction> createRedcodeObjects(ArrayList<String[]> instructions) {
+		LinkedList<RedcodeInstruction> instructionList = new LinkedList<RedcodeInstruction>();
+
 		for (final ListIterator<String[]> iterator = instructions.listIterator(); iterator.hasNext();) {
-			 
+			 /*
 			for (String statement : iterator.next()) {
 				RedcodeInstruction instruction = new RedcodeInstruction();
 			}
+			*/
 			
+			String[] line = iterator.next();
+			
+			String inputOpcode = line[0];
+			String inputAfield = line[1];
+			String inputBfield = line[2];
+			
+			Opcode opcode = null;
+			Operand aField = null;
+			Operand bField = null;
+			
+			try {
+				opcode = this.parseOpcode(inputOpcode);
+				aField = this.parseOperand(inputAfield);
+				bField = this.parseOperand(inputBfield);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
+			instructionList.add(new RedcodeInstruction(opcode, aField, bField));
+
 		}
 		
-		
-		
-		return null;
-		
+		return instructionList;
 	}
 	
+	
+	
+	
+	private Opcode parseOpcode(String input) throws UnknownOpcodeException {
+		Opcode[] existingOpcodes = Opcode.getFields();
+		Opcode opcodeToParse = null;
+		ArrayList<Opcode> usedOpcodes = new ArrayList<Opcode>();
+		
+		for (Opcode op : existingOpcodes) {
+			if (op.name().equals(input)) {
+				opcodeToParse = op;
+				usedOpcodes.add(opcodeToParse);
+			}
+		}
+		
+		if (opcodeToParse == null) {
+			throw new UnknownOpcodeException("Unrecognized Opcode : " + input);
+		}
+		
+		return opcodeToParse;
+	}
+	
+	
+	
+	
+	private Operand parseOperand(String input) throws InvalidOperandException {
+		
+		HashMap<String, AddressingMode> symbols = AddressingMode.getSymbols();
+		AddressingMode addressingModeToParse = null;
+		
+		switch (input.length()) {
+		case 1:
+			return new Operand(AddressingMode.DIRECT, Integer.valueOf(input));
+		case 2:
+			String symbolToParse = String.valueOf(input.charAt(0));
+			if (symbols.containsValue(symbolToParse)) {
+				addressingModeToParse = symbols.get(symbolToParse);
+				return new Operand(addressingModeToParse, Integer.valueOf(input.charAt(1)));
+			}
+			throw new InvalidOperandException();
+		default:
+			throw new InvalidOperandException();
+			
+		
+		}
+	}
 	
 	
 	
@@ -149,14 +216,9 @@ public class RedcodeParser {
 		if (!opcodeList.containsAll(opcodeFileList)) {
 			
 		}
-		
-		
-		
-		
+			
 	}
-	
 	*/
-	
 	
 	
 	

@@ -29,9 +29,9 @@ public class Warrior {
 	 * Create a new process and load instructions into it. Used when the warrior is created
 	 * @param instructions The instructions to load
 	 */
-	public void loadInstructions(LinkedList<RedcodeInstruction> instructions) {
+	public void initialize(int address) {
 		if(this.fifo.isEmpty()) {
-			this.fifo.add(new Process(0));
+			this.fifo.add(new Process(address));
 			this.currentActiveProcess = 0;
 		}
 		//TODO deal with the else condition
@@ -65,6 +65,7 @@ public class Warrior {
 	
 	public void createNewProcess(int address) {
 		this.fifo.add(new Process(address));
+		this.nextCurrentActiveProcess();
 	}
 	
 	

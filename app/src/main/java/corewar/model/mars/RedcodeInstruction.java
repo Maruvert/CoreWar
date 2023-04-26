@@ -1,17 +1,16 @@
 package corewar.model.mars;
 
-import corewar.model.mars.redcode.IOpcode;
+import corewar.model.mars.redcode.Opcode;
 import corewar.model.mars.redcode.Operand;
 
 /**
  * Represents a Redcode instruction (Opcode + Operand A and B) 
  */
 public class RedcodeInstruction {
-	
 	/**
 	 * The opcode
 	 */
-	private IOpcode opcode;
+	private Opcode opcode;
 	
 	
 	/**
@@ -28,7 +27,7 @@ public class RedcodeInstruction {
 	
 	
 	
-	public RedcodeInstruction(IOpcode opcode, Operand firstValue, Operand secondValue) {
+	public RedcodeInstruction(Opcode opcode, Operand firstValue, Operand secondValue) {
 		this.opcode = opcode;
 		this.a = firstValue;
 		this.b = secondValue;
@@ -38,7 +37,7 @@ public class RedcodeInstruction {
 	
 	
 	public RedcodeInstruction() {
-		opcode = opcode.getDat();
+		opcode = Opcode.DAT;
 		this.a = new Operand(0);
 		this.b = new Operand(0);
 	}
@@ -46,7 +45,7 @@ public class RedcodeInstruction {
 	
 	
 	public RedcodeInstruction(int value) {
-		this.opcode = opcode.getDat();
+		this.opcode = Opcode.DAT;
 		this.a = new Operand(0);
 		this.b = new Operand(value);
 	}
@@ -61,11 +60,9 @@ public class RedcodeInstruction {
 	public void addToBfield(int value) {
 		this.b.add(value);
 	} 
-	
-	
-	
 
-	public IOpcode getOpcode() {
+
+	public Opcode getOpcode() {
 		return opcode;
 	}
 
