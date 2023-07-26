@@ -1,13 +1,14 @@
 package corewar.model.mars.redcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import corewar.model.exceptions.InvalidAddressingModeException;
 import corewar.model.mars.Ram;
 import corewar.model.mars.memory.MemoryAddress;
-import corewar.model.utils.EnumUtils;
 
+/**
+ * Enum containing all existing opcodes / represents an opcode
+ * @author Maruvert
+ *
+ */
 public enum Opcode {
 	
 	DAT {
@@ -78,28 +79,28 @@ public enum Opcode {
 	};
 	
 	
+	
+	/**
+	 * The Redcode standard used in the game
+	 */
 	private static IOpcode standard;
 	
 	
+	/**
+	 * Execute the instruction contained in 'memory'
+	 * @param ram The ram in which the memory is contained
+	 * @param memory The address containting the instruction to execute
+	 * @return Informations about the next instruction to execute
+	 * @throws InvalidAddressingModeException
+	 */
 	public abstract NextInstructionInformation execute(Ram ram, MemoryAddress memory) throws InvalidAddressingModeException;
 	
 	
 	
-
 	/**
-	 * Create an ArrayList that contains all opcodes in the specified standard
-	 * @param standardClass The standard enum
-	 * @return The ArrayList containing all opcodes
+	 * Return an array containing all existing opcodes
+	 * @return An array containing all existing opcodes
 	 */
-	protected ArrayList<String> createOpcodeArrayList(Class<? extends Enum<?>> standardClass) {
-		String[] opcodeArray = EnumUtils.getNames(standardClass);
-		ArrayList<String> opcodeList = (ArrayList<String>) Arrays.asList(opcodeArray);
-		return opcodeList;
-	} 
-	
-	
-	
-	
 	public static Opcode[] getFields() {
 	    return Opcode.class.getEnumConstants();
 	}
@@ -107,15 +108,21 @@ public enum Opcode {
 	
 	
 	
-	
-	
+	/**
+	 * Used to set the current opcode standard
+	 * @param standard The Redcode standard used in the game
+	 */
 	public static void setStandard(IOpcode standard) {
 		Opcode.standard = standard;
 	}
 
 
+	
 
-
+	/**
+	 * Return the Redcode standard
+	 * @return The Redcode standard
+	 */
 	public static IOpcode getStandard() {
 		return standard;
 	}

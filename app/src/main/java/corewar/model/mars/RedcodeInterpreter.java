@@ -83,10 +83,10 @@ public class RedcodeInterpreter {
 		case NEXT:
 			break;
 		case SKIP:
-			current.skipNextInstructionOnActiveProcess();
+			current.skipNextAddressOnActiveProcess();
 			break;
 		case JUMP:
-			current.jumpInstructionOnActiveProcess(next.getAddress());
+			current.jumpToAddressOnActiveProcess(next.getAddress());
 			break;
 		case FORK:
 			current.createNewProcess(next.getAddress());

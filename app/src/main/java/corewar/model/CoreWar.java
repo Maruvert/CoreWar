@@ -11,11 +11,10 @@ import corewar.model.mars.redcode.Opcode;
 import corewar.model.mars.redcode.standards.Icws88;
 import corewar.model.utils.FileUtils;
 import corewar.model.utils.MathsUtils;
-import corewar.model.mars.Process;
 
 /**
  * The CoreWar launcher, used from main
- *
+ * @author Maruvert
  */
 public class CoreWar {
 	
@@ -46,7 +45,6 @@ public class CoreWar {
 	 */
 	public void initialize() {
 		Opcode.setStandard(new Icws88()); //Placeholder, will be deleted when more standards will be supported
-		Process.setRamSize(ramSize);
 		Ram ram = new Ram(this.ramSize);
 		ram.initialize();
 		
@@ -94,6 +92,7 @@ public class CoreWar {
 		
 		this.w1redcode = this.loadRedcodeFile(r1);
 		this.w2redcode = this.loadRedcodeFile(r2);
+		sc.close();
 		
 		
 		

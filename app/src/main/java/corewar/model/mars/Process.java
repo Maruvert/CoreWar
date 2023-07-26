@@ -1,23 +1,27 @@
 package corewar.model.mars;
 
-import java.util.LinkedList;
-
-import corewar.model.mars.Warrior;
-import corewar.model.mars.memory.MemoryAddress;
-
+/**
+ * A specific process (pointer into memory) used by warriors
+ * @author Maruvert
+ * @see Warrior
+ */
 public class Process {
 
+	/**
+	 * The position of the process in the ram
+	 */
 	private int currentPosition;
-	private static int ramSize;
 	
 	
-	public Process() {}
-	
-	
-	
-	public Process(int currentPosition) {
-		this.currentPosition = currentPosition;
+	/**
+	 * Initialize a new process by specifying his position
+	 * @param currentPosition The position in the ram
+	 */
+	public Process(int initialPosition) {
+		this.currentPosition = initialPosition;
+		//TODO Deal with invalid values (exception)
 	}
+	
 	
 	
 	/**
@@ -26,38 +30,29 @@ public class Process {
 	 */
 	public int getNextInstructionAddress() {
 		int nextInstruction = this.currentPosition;
-		this.currentPosition = this.incrementAddress(currentPosition, 1);
+		this.currentPosition = Ram.getAddress(currentPosition + 1);
 		return nextInstruction;
 	}
 	
 	
 	
+	/**
+	 * Skip the next instruction
+	 */
 	public void skipNextInstruction() {
-		this.currentPosition = this.incrementAddress(currentPosition, 1);
+		this.currentPosition = Ram.getAddress(currentPosition + 1);
 	}
 	
 	
-	
-	private int incrementAddress(int value, int incrementValue) {
-		value += incrementValue;
-		if (value >= ramSize) {
-			value -= ramSize;
-		}
-		return value;
-	}
 
 
-
+	/**
+	 * Set the current position
+	 * @param currentPosition The current position
+	 */
 	public void setCurrentPosition(int currentPosition) {
 		this.currentPosition = currentPosition;
 	}
-	
-	
-	
-	public static void setRamSize(int ramSize) {
-		Process.ramSize = ramSize;
-	}
-	
 	
 	
 }

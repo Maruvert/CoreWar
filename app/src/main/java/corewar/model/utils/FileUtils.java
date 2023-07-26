@@ -49,6 +49,7 @@ public class FileUtils {
 	    while(scanner.hasNext()){
 	        lines.add(scanner.nextLine());
 	    }
+	    scanner.close();
 	    return lines;
 	}
 	

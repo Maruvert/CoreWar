@@ -20,7 +20,7 @@ import corewar.model.utils.FileUtils;
  */
 public class RedcodeParser {
 	
-	private int firstInstructionIndex;
+	//private int firstInstructionIndex;
 	
 
 	public RedcodeParser() {}
@@ -33,7 +33,7 @@ public class RedcodeParser {
 		redcode = removeMultipleSpaces(redcode);
 		ArrayList<String> lines = FileUtils.splitLines(redcode);
 		lines = clearComments(lines);
-		firstInstructionIndex = defineFirstInstruction(lines);
+		//firstInstructionIndex = defineFirstInstruction(lines);
 		ArrayList<String[]> instructions = createInstructionArray(lines);
 		LinkedList<RedcodeInstruction> instructionList = createRedcodeObjects(instructions);
 		return instructionList;
@@ -83,6 +83,9 @@ public class RedcodeParser {
 	
 
 	
+	
+	
+	/*
 	private int defineFirstInstruction(ArrayList<String> lines) {
 		for (final ListIterator<String> iterator = lines.listIterator(); iterator.hasNext();) {
 			  final String line = iterator.next();
@@ -94,7 +97,7 @@ public class RedcodeParser {
 		}
 		return 0;
 	}
-	
+	*/
 	
 	
 	
@@ -188,7 +191,7 @@ public class RedcodeParser {
 			return new Operand(AddressingMode.DIRECT, Integer.valueOf(input));
 		case 2:
 			String symbolToParse = String.valueOf(input.charAt(0));
-			if (symbols.containsValue(symbolToParse)) {
+			if (symbols.containsKey(symbolToParse)) {
 				addressingModeToParse = symbols.get(symbolToParse);
 				return new Operand(addressingModeToParse, Integer.valueOf(input.charAt(1)));
 			}

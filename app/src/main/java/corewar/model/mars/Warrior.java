@@ -1,22 +1,44 @@
 package corewar.model.mars;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-import corewar.model.mars.memory.MemoryAddress;
-
+/**
+ * A CoreWar warrior
+ * @author Maruvert
+ *
+ */
 public class Warrior {
 	
+	/**
+	 * The author's name
+	 */
 	private String author;
+	
+	/**
+	 * A list of active process (pointers into memory)
+	 */
 	private ArrayList<Process> fifo;
+	
+	/**
+	 * The current active process
+	 */
 	private int currentActiveProcess;
 	
 	
+	
+	
+	/**
+	 * Default constructor setting author's name as 'Guest'
+	 */
 	public Warrior() {
 		this("Guest");
 	}
 	
 	
+	/**
+	 * Constructor using the author's name
+	 * @param author The author's name
+	 */
 	public Warrior(String author) {
 		this.author = author;
 		this.fifo = new ArrayList<Process>();
@@ -51,24 +73,40 @@ public class Warrior {
 	
 	
 	
-	public void skipNextInstructionOnActiveProcess() {
+	
+	/**
+	 * Skip the next address on the active process
+	 */
+	public void skipNextAddressOnActiveProcess() {
 		this.fifo.get(currentActiveProcess).skipNextInstruction();
 	}
 	
 	
-	public void jumpInstructionOnActiveProcess(int address) {
+	
+	/**
+	 * Jump to a certain address on the active process
+	 * @param address The address to jump to
+	 */
+	public void jumpToAddressOnActiveProcess(int address) {
 		this.fifo.get(currentActiveProcess).setCurrentPosition(address);
 	}
 	
 	
 	
-	
+	/**
+	 * Create a new process for this warrior by specifying its initial position
+	 * @param address The initial position in the ram for the process
+	 */
 	public void createNewProcess(int address) {
 		this.fifo.add(new Process(address));
 		this.nextCurrentActiveProcess();
 	}
 	
 	
+	
+	/**
+	 * Select the next process to be active
+	 */
 	private void nextCurrentActiveProcess() {
 		this.currentActiveProcess += 1;
 		if (this.currentActiveProcess > this.fifo.size()-1) {
@@ -78,10 +116,29 @@ public class Warrior {
 	
 	
 	
-	
+	/**
+	 * Return true if the warrior doesn't have any active process
+	 * @return True if the warrior doesn't have any active process ; false else
+	 */
 	public boolean isFifoEmpty() {
 		return this.fifo.isEmpty();
 	}
+
+	
+	
+
+	/**
+	 * Return the author
+	 * @return The author
+	 */
+	public String getAuthor() {
+		return author;
+	}
+	
+	
+	
+	
+	
 	
 
 }

@@ -6,6 +6,11 @@ import corewar.model.exceptions.NotAValueException;
 import corewar.model.mars.Ram;
 import corewar.model.mars.memory.MemoryAddress;
 
+/**
+ * Enum containing all addressing modes
+ * @author Maruvert
+ *
+ */
 public enum AddressingMode {
 	
 	
@@ -82,6 +87,11 @@ public enum AddressingMode {
 	
 	
 	
+	
+	/**
+	 * Return a key/value of each symbol associated with his addressing mode
+	 * @return An HashMap Symbol / Addressing Mode
+	 */
 	public static HashMap<String, AddressingMode> getSymbols() {
 		HashMap<String, AddressingMode> symbols = new HashMap<String, AddressingMode>();
 		for (AddressingMode mode : AddressingMode.class.getEnumConstants()) {
@@ -92,11 +102,22 @@ public enum AddressingMode {
 	
 	
 	
-	
+	/**
+	 * Target a memory address using a specific addressing mode
+	 * @param ram The ram in which the game take place
+	 * @param address The current address //TODO Refactor (Change MemoryAddress address into int address)
+	 * @param value The value associated to the mode
+	 * @return The targeted address
+	 */
 	public abstract int getTargetedMemoryAddress(Ram ram, MemoryAddress address, int value);
 	
 	
 	
+	
+	/**
+	 * Return the mode's symbol
+	 * @return The mode's symbol
+	 */
 	public abstract String getSymbol();
 	
 	
